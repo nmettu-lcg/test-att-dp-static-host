@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: att-dp-static-host
+  labels:
+    app: att-dp-static-host
+    tier: frontend
+    role: master
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: att-dp-static-host
+    tier: frontend
+    role: master
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: att-dp-static-host
+spec:
+  selector:
+    matchLabels:
+      app: att-dp-static-host
+      role: master
+      tier: frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: att-dp-static-host
+        role: master
+        tier: frontend
+    spec:
+      containers:
+      - name: master
+        image: 953185573346.dkr.ecr.us-west-2.amazonaws.com/att-dp-static-host:dev3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080

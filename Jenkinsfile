@@ -58,7 +58,7 @@ pipeline {
                     
                     sh """
                         docker build -t att-dp-static .
-                        docker run -d -p 8081:8080 --name docker-test-static att-dp-static:latest
+                        docker run -d -p 8910:8080 --name docker-test-static att-dp-static:latest
                     """
                 }
             }
